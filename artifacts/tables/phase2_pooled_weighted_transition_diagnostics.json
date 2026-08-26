@@ -1,0 +1,19 @@
+{
+  "adjacent_pairs": 7948131,
+  "candidate_pairs": 7948208,
+  "conflicting_duplicate_loan_months": 0,
+  "conflicting_rows_dropped": 0,
+  "duplicate_loan_months": 0,
+  "duplicate_rows": 0,
+  "gap_pairs_skipped": 77,
+  "identical_duplicate_loan_months": 0,
+  "identical_duplicate_rows_collapsed": 0,
+  "input_loans": 120000,
+  "input_rows": 8068208,
+  "largest_gap_months": 112,
+  "loans_with_duplicates": 0,
+  "loans_with_gaps": 77,
+  "unique_loan_months": 8068208,
+  "unknown_state_rows": 0,
+  "usable_loan_months": 8068208
+}

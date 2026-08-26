@@ -1,0 +1,85 @@
+{
+  "cure": {
+    "definition": {
+      "censor_states": [
+        "PAID_OFF",
+        "CENSORED_RPL",
+        "CENSORED_DEFECT",
+        "UNKNOWN"
+      ],
+      "default_states": [
+        "DEFAULTED"
+      ],
+      "outcome_horizon_months": 12,
+      "sustained_current_months": 3
+    },
+    "development": {
+      "censored_outcomes": 359,
+      "conflicting_loan_months_dropped": 0,
+      "cured_within_horizon": 2218,
+      "default_events": 215,
+      "episodes": 3205,
+      "gaps_encountered": 2,
+      "identical_duplicate_rows_collapsed": 0,
+      "input_loans": 9999,
+      "input_rows": 593879,
+      "noncures_within_horizon": 628,
+      "usable_loan_months": 593879
+    },
+    "development_observed_targets": 2846,
+    "saved_development_episodes": 3205,
+    "saved_validation_episodes": 346,
+    "validation_observed_targets": 139,
+    "validation_panel": {
+      "censored_outcomes": 212,
+      "conflicting_loan_months_dropped": 0,
+      "cured_within_horizon": 217,
+      "default_events": 65,
+      "episodes": 637,
+      "gaps_encountered": 0,
+      "identical_duplicate_rows_collapsed": 0,
+      "input_loans": 4332,
+      "input_rows": 49486,
+      "noncures_within_horizon": 208,
+      "usable_loan_months": 49486
+    }
+  },
+  "ead_validation": {
+    "mae": 163.79894788343933,
+    "mean_error": 61.85773822705024,
+    "rmse": 1101.600882360557,
+    "rows": 39590,
+    "weight_sum": 1339472.224,
+    "weighted_absolute_error_sum": 219404141.01029056,
+    "weighted_error_sum": 82856722.1945968,
+    "weighted_squared_error_sum": 1625482366274.8948
+  },
+  "expansion_weight": 33.8336,
+  "outputs": {
+    "cure": "data/processed/phase3/quarters/cure_2005q1.parquet",
+    "ead_validation": "data/processed/phase3/quarters/ead_validation_2005q1.parquet",
+    "loss": "data/processed/phase3/quarters/loss_2005q1.parquet",
+    "snapshot": "data/processed/phase3/quarters/snapshot_2005q1.parquet"
+  },
+  "release47_reconciliation": {
+    "maximum_absolute_difference": 0.0,
+    "status_counts": {
+      "actual_loss_missing": 13,
+      "reconciled": 241
+    }
+  },
+  "rows": {
+    "cure": 3551,
+    "ead_validation": 39590,
+    "loss": 254,
+    "snapshot": 3171
+  },
+  "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+  "terminal_mapping": {
+    "code15_default_rows": 0,
+    "code15_misclassified_rows": 0,
+    "code16_censor_rows": 0,
+    "code16_misclassified_rows": 0
+  },
+  "vintage": "2005Q1"
+}

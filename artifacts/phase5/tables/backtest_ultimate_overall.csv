@@ -1,0 +1,2 @@
+observation_count,total_provision,total_discounted_realized_loss,provision_gap,coverage_ratio,mean_gap,mean_absolute_error,root_mean_squared_error,outcome
+36962,6994256137.5862150192,8496399206.0848255157,-1502143068.4986104965,0.8232023906,-40640.1998944486,221994.5755035863,772103.8231387702,under_provisioned

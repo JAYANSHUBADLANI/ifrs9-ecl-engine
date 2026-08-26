@@ -1,0 +1,13 @@
+vintage,reconciled,outside_tolerance,actual_loss_missing,maximum_absolute_difference,code15_default_rows,code15_misclassified_rows,code16_censor_rows,code16_misclassified_rows
+2005Q1,241,0,13,0.0,0,0,0,0
+2005Q2,267,0,14,0.0,0,0,0,0
+2005Q3,345,0,16,0.0,0,0,0,0
+2005Q4,416,0,23,0.0,0,0,0,0
+2006Q1,487,0,40,0.0,0,0,0,0
+2006Q2,426,0,36,0.0,0,0,0,0
+2006Q3,416,0,32,0.0,0,0,0,0
+2006Q4,483,0,55,0.0,0,0,0,0
+2007Q1,448,0,40,0.0,0,0,0,0
+2007Q2,473,0,49,0.0,0,0,0,0
+2007Q3,443,0,85,0.0,0,0,0,0
+2007Q4,488,0,92,0.0,0,0,0,0

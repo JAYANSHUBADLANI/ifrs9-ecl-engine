@@ -1,0 +1,37 @@
+{
+  "artifact_version": 1,
+  "ead_method_counts": {
+    "scheduled_amortization_with_snapshot_add_on": 36962
+  },
+  "input_signature": "110569cb99871a98d9168f64afd93feb8994c6d55c61ef1cc644d62fbbf379a1",
+  "inputs": {
+    "current_pd": "artifacts/phase2/current_pd_curves.parquet",
+    "ead": "artifacts/phase3/ead_inputs.parquet",
+    "lgd": "artifacts/phase3/lgd_inputs.parquet",
+    "origination_pd": "artifacts/phase2/origination_pd_curves.parquet",
+    "snapshot": "artifacts/phase2/snapshot_loans.parquet"
+  },
+  "outputs": {
+    "loan_ecl": "data/processed/phase4/loan_ecl.parquet",
+    "scenario_summary": "artifacts/phase4/tables/scenario_summary.csv",
+    "stage_figure": "reports/figures/phase4_ecl_by_stage.png",
+    "stage_summary": "artifacts/phase4/tables/stage_summary.csv"
+  },
+  "run_completed_at_utc": "2026-08-20T17:07:42.418494+00:00",
+  "scenario_method": "constant log-odds shift to monthly conditional hazards",
+  "scenario_weights_sum": 1.0,
+  "snapshot_loans": 36962,
+  "stage_counts": {
+    "1": 31521,
+    "2": 1923,
+    "3": 3518
+  },
+  "staging_policy": {
+    "absolute_lifetime_pd_increase": 0.05,
+    "relative_lifetime_pd_ratio": 2.0,
+    "stage2_dpd_backstop": 30,
+    "stage3_dpd_threshold": 90
+  },
+  "total_expansion_weighted_ecl": 6994256137.586215,
+  "total_probability_weighted_ecl": 214659176.07874224
+}

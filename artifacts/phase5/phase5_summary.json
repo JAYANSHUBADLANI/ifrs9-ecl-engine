@@ -1,0 +1,56 @@
+{
+  "artifact_version": 3,
+  "backtest_weight_sum": 1251921.2103999997,
+  "exposure_weighting_applied": true,
+  "input_signature": "c488cddc207a526b0db04db611a799522cff45e24d0f2adaf17600c741d14a4d",
+  "inputs": {
+    "phase4_loan_ecl": "data/processed/phase4/loan_ecl.parquet",
+    "realized_loss_source": "Phase 1 panel checkpoints"
+  },
+  "loans_with_realized_loss_events": 2555,
+  "loss_window_rule": "strictly after snapshot; Stage 1 through its 12-month ECL horizon, Stage 2 through its remaining-lifetime ECL horizon, and Stage 3 through the data cutoff",
+  "outputs": {
+    "backtest_detail": "data/processed/phase5/backtest_detail.parquet",
+    "backtest_figure": "reports/figures/phase5_provision_backtest.png",
+    "overall_table": "artifacts/phase5/tables/backtest_overall.csv",
+    "realized_loss_events": "data/processed/phase5/realized_loss_events.parquet",
+    "segment_table": "artifacts/phase5/tables/backtest_by_segment.csv",
+    "ultimate_overall_table": "artifacts/phase5/tables/backtest_ultimate_overall.csv",
+    "ultimate_segment_table": "artifacts/phase5/tables/backtest_ultimate_by_segment.csv"
+  },
+  "overall": {
+    "coverage_ratio": 0.982206623490162,
+    "mean_absolute_error": 184224.44178513525,
+    "mean_gap": -3428.0060524178352,
+    "observation_count": 36962,
+    "outcome": "under_provisioned",
+    "provision_gap": -126705959.70946789,
+    "root_mean_squared_error": 710165.8466927655,
+    "total_discounted_realized_loss": 7120962097.295683,
+    "total_provision": 6994256137.586215
+  },
+  "performance_cutoff_month": "202603",
+  "realized_loss_events": 2555,
+  "run_completed_at_utc": "2026-08-20T17:19:24.802744+00:00",
+  "segment_columns": [
+    "stage"
+  ],
+  "snapshot_loans": 36962,
+  "snapshot_month": "201212",
+  "ultimate_stress_diagnostic": {
+    "loans_with_realized_loss_events": 3554,
+    "loss_window_rule": "strictly after snapshot and through cutoff for every stage",
+    "overall": {
+      "coverage_ratio": 0.8232023905582464,
+      "mean_absolute_error": 221994.5755035863,
+      "mean_gap": -40640.199894448626,
+      "observation_count": 36962,
+      "outcome": "under_provisioned",
+      "provision_gap": -1502143068.4986105,
+      "root_mean_squared_error": 772103.8231387702,
+      "total_discounted_realized_loss": 8496399206.0848255,
+      "total_provision": 6994256137.586215
+    },
+    "realized_loss_events": 3554
+  }
+}

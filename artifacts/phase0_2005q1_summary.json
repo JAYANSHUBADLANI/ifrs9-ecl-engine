@@ -1,0 +1,109 @@
+{
+  "actual_loss_validation_passed": true,
+  "archive": {
+    "archive": "historical_data_2005/historical_data_2005Q1.zip",
+    "archive_bytes": 379039966,
+    "members": [
+      {
+        "compressed_bytes": 6956813,
+        "crc32": "3c0ac532",
+        "encrypted": false,
+        "name": "orig_2005Q1.txt",
+        "uncompressed_bytes": 43513368
+      },
+      {
+        "compressed_bytes": 372082815,
+        "crc32": "224b9e51",
+        "encrypted": false,
+        "name": "perf_2005Q1.txt",
+        "uncompressed_bytes": 3011849336
+      }
+    ],
+    "origination_expected_fields": 31,
+    "origination_member": "orig_2005Q1.txt",
+    "performance_expected_fields": 35,
+    "performance_member": "perf_2005Q1.txt",
+    "release": 47,
+    "vintage": "2005Q1"
+  },
+  "outputs": {
+    "archive_audit": "artifacts/data_audit/phase0_2005q1_archive.json",
+    "counts": "artifacts/tables/phase0_2005q1_transition_counts.csv",
+    "diagnostics": "artifacts/tables/phase0_2005q1_transition_diagnostics.json",
+    "figure": "reports/figures/phase0_2005q1_transition_matrix.png",
+    "monthly_panel": "data/processed/phase0_2005q1_panel.parquet",
+    "origination_sample": "data/processed/phase0_2005q1_origination.parquet",
+    "probabilities": "artifacts/tables/phase0_2005q1_transition_probabilities.csv",
+    "state_distribution": "artifacts/tables/phase0_2005q1_state_distribution.csv"
+  },
+  "panel": {
+    "actual_loss_outside_tolerance_rows": 0,
+    "actual_loss_reconciled_rows": 149,
+    "actual_loss_rows": 149,
+    "before_first_payment_rows": 4995,
+    "earliest_reporting_month": "200412",
+    "latest_reporting_month": "202603",
+    "loan_count": 5000,
+    "maximum_actual_loss_difference": "0",
+    "may_2019_or_later_rows": 21515,
+    "pre_may_2019_rows": 394575,
+    "rows_written": 416090,
+    "state_counts": {
+      "30_DPD": 8070,
+      "60_DPD": 2214,
+      "90_PLUS": 4952,
+      "CENSORED_DEFECT": 8,
+      "CENSORED_RPL": 21,
+      "CURRENT": 394996,
+      "DEFAULTED": 1165,
+      "PAID_OFF": 4664
+    },
+    "vintage": "2005Q1",
+    "zero_balance_code_counts": {
+      "01": 4664,
+      "02": 21,
+      "03": 26,
+      "09": 111,
+      "15": 3,
+      "16": 21,
+      "96": 8
+    }
+  },
+  "performance_scan": {
+    "completed_archive_scan": false,
+    "early_stop_occurred": true,
+    "loan_order_check_enabled": true,
+    "loan_order_valid": true,
+    "ordering_checks": 416090,
+    "physical_rows_scanned": 416091,
+    "requested_loans": 5000,
+    "selected_loans_found": 5000,
+    "selected_rows_yielded": 416090,
+    "selection_complete": true
+  },
+  "release": 47,
+  "requested_loans": 5000,
+  "run_completed_at_utc": "2026-08-15T09:28:01.798430+00:00",
+  "sample_is_representative": false,
+  "sample_method": "deterministic origination file prefix",
+  "transitions": {
+    "adjacent_pairs": 411087,
+    "candidate_pairs": 411090,
+    "conflicting_duplicate_loan_months": 0,
+    "conflicting_rows_dropped": 0,
+    "duplicate_loan_months": 0,
+    "duplicate_rows": 0,
+    "gap_pairs_skipped": 3,
+    "identical_duplicate_loan_months": 0,
+    "identical_duplicate_rows_collapsed": 0,
+    "input_loans": 5000,
+    "input_rows": 416090,
+    "largest_gap_months": 28,
+    "loans_with_duplicates": 0,
+    "loans_with_gaps": 3,
+    "unique_loan_months": 416090,
+    "unknown_state_rows": 0,
+    "usable_loan_months": 416090
+  },
+  "vintage": "2005Q1"
+}

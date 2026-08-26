@@ -1,0 +1,32 @@
+.DS_Store
+.env
+.venv/
+.venv*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# Freddie Mac source data is licensed for personal and research use.
+data/raw/*
+!data/raw/.gitkeep
+
+# Rebuildable loan-level outputs can be large or contain licensed records.
+data/processed/*
+!data/processed/.gitkeep
+
+# Keep small aggregate evidence, but exclude future large model artifacts.
+artifacts/models/
+artifacts/**/*.parquet
+artifacts/**/*.joblib
+artifacts/**/*.pkl
+artifacts/.matplotlib/
+
+# Machine-specific source locations.
+config/local.yaml

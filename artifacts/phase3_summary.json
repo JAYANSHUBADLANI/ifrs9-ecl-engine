@@ -1,0 +1,1430 @@
+{
+  "adapter_schemas": {
+    "ead_inputs": [
+      "loan_id",
+      "vintage",
+      "reporting_month",
+      "state",
+      "sample_weight",
+      "segment",
+      "fico_segment",
+      "ltv_segment",
+      "delinquency_segment",
+      "effective_annual_rate",
+      "ead",
+      "ead_interest_bearing_upb",
+      "ead_non_interest_bearing_upb",
+      "ead_delinquent_accrued_interest",
+      "ead_balance_basis",
+      "ead_component_valid",
+      "current_interest_rate",
+      "remaining_months_to_legal_maturity",
+      "predicted_ead"
+    ],
+    "lgd_inputs": [
+      "loan_id",
+      "vintage",
+      "reporting_month",
+      "state",
+      "sample_weight",
+      "segment",
+      "fico_segment",
+      "ltv_segment",
+      "delinquency_segment",
+      "effective_annual_rate",
+      "lgd",
+      "predicted_lgd",
+      "expected_lgd",
+      "conditional_lgd",
+      "cure_probability",
+      "cure_adjustment_applicable",
+      "lgd_formula"
+    ],
+    "snapshot_inputs": [
+      "loan_id",
+      "vintage",
+      "reporting_month",
+      "state",
+      "sample_weight",
+      "segment",
+      "fico_segment",
+      "ltv_segment",
+      "delinquency_segment",
+      "effective_annual_rate",
+      "lgd",
+      "predicted_lgd",
+      "expected_lgd",
+      "conditional_lgd",
+      "cure_probability",
+      "cure_adjustment_applicable",
+      "lgd_formula",
+      "ead",
+      "predicted_ead",
+      "ead_interest_bearing_upb",
+      "ead_non_interest_bearing_upb",
+      "ead_delinquent_accrued_interest",
+      "remaining_months_to_legal_maturity",
+      "orig_classic_fico",
+      "orig_original_ltv",
+      "orig_original_dti",
+      "orig_occupancy_status",
+      "orig_property_type",
+      "orig_loan_purpose"
+    ]
+  },
+  "cure_definition": {
+    "code16_treatment": "censored RPL exit",
+    "development_label_cutoff": 201112,
+    "event": "3 consecutive adjacent CURRENT months",
+    "horizon_months": 12,
+    "validation_episode_starts_after": 201112,
+    "validation_label_cutoff": 201212
+  },
+  "cure_model": {
+    "categorical_features": [
+      "start_state",
+      "vintage",
+      "orig_occupancy_status",
+      "orig_property_type",
+      "orig_loan_purpose"
+    ],
+    "development_diagnostics": {
+      "brier_score": 0.2064709790017223,
+      "converged": true,
+      "effective_sample_size": 34776.23157541446,
+      "encoded_feature_count": 33,
+      "excluded_missing_target_rows": 5430,
+      "fitted_rows": 35923,
+      "input_rows": 41353,
+      "iterations": 77,
+      "log_loss": 0.6000116090220291,
+      "max_iterations": 1000,
+      "negative_rows": 11533,
+      "positive_rows": 24390,
+      "roc_auc": 0.6315172189655877,
+      "warnings": [],
+      "weight_sum": 1208525.6221,
+      "weighted_cure_rate": 0.6839660285924856
+    },
+    "numeric_features": [
+      "loan_age",
+      "current_actual_upb",
+      "current_interest_rate",
+      "estimated_ltv",
+      "orig_classic_fico",
+      "orig_original_ltv",
+      "orig_original_dti"
+    ],
+    "out_of_time_validation": {
+      "brier_score": 0.16512710494726315,
+      "log_loss": 0.5122603489703565,
+      "negative_rows": 194,
+      "positive_rows": 1984,
+      "roc_auc": 0.6314099639418214,
+      "rows": 2178,
+      "weight_sum": 72778.3606,
+      "weighted_observed_rate": 0.9119831424177478,
+      "weighted_predicted_rate": 0.6273498194357776
+    }
+  },
+  "ead": {
+    "out_of_time_validation": {
+      "mae": 160.6594323985671,
+      "mean_error": 32.99942206625882,
+      "rmse": 1418.050368604498,
+      "rows": 462388,
+      "weight_sum": 15672702.349199995,
+      "weighted_absolute_error_sum": 2517967463.5741606,
+      "weighted_error_sum": 517190119.7400968,
+      "weighted_squared_error_sum": 31515717571000.582
+    },
+    "projection": "Contractual fixed-rate scheduled amortization with disclosed current rate and remaining term. Snapshot add-ons are held constant in the saved audit sample.",
+    "projection_sample_loans": 250,
+    "scalar_definition": "Interest-bearing UPB plus non-interest-bearing UPB plus delinquent accrued interest. Terminal defaults use disclosed Zero Balance Removal UPB as the principal basis when available.",
+    "snapshot_defaulted_loans": 556,
+    "snapshot_month": 201212,
+    "snapshot_reporting_loans": 36962,
+    "snapshot_weighted_loans": 1251921.2103999997
+  },
+  "lgd_adapter_policy": {
+    "30_dpd": "(1 - cure_probability) * conditional_lgd",
+    "60_dpd": "(1 - cure_probability) * conditional_lgd",
+    "90_plus": "(1 - cure_probability) * conditional_lgd because the Freddie row is nonterminal even when downstream staging assigns Stage 3",
+    "current": "conditional_lgd; cure is not applicable",
+    "defaulted": "conditional_lgd with cure_probability set to zero and marked not applicable"
+  },
+  "memory_policy": "Monthly panels are read and checkpointed one quarter at a time",
+  "outputs": {
+    "cure_calibration_figure": "reports/figures/phase3_cure_calibration.png",
+    "cure_calibration_table": "artifacts/tables/phase3_cure_calibration.csv",
+    "cure_dataset": "data/processed/phase3/cure_dataset.parquet",
+    "cure_model": "artifacts/phase3/models/cure_model.joblib",
+    "cure_validation_predictions": "data/processed/phase3/cure_validation_predictions.parquet",
+    "ead_inputs": "artifacts/phase3/ead_inputs.parquet",
+    "ead_projection_sample": "artifacts/phase3/ead_projection_sample.parquet",
+    "ead_validation_figure": "reports/figures/phase3_ead_validation_errors.png",
+    "ead_validation_table": "artifacts/tables/phase3_ead_validation.csv",
+    "lgd_inputs": "artifacts/phase3/lgd_inputs.parquet",
+    "processed_ead_inputs": "data/processed/phase3/ead_inputs.parquet",
+    "processed_lgd_inputs": "data/processed/phase3/lgd_inputs.parquet",
+    "processed_snapshot_inputs": "data/processed/phase3/snapshot_inputs.parquet",
+    "realized_lgd_dataset": "data/processed/phase3/realized_lgd_dataset.parquet",
+    "release47_reconciliation_table": "artifacts/tables/phase3_release47_reconciliation.csv",
+    "severity_calibration_figure": "reports/figures/phase3_severity_calibration.png",
+    "severity_calibration_table": "artifacts/tables/phase3_severity_calibration.csv",
+    "severity_model": "artifacts/phase3/models/severity_model.joblib",
+    "severity_validation_predictions": "data/processed/phase3/severity_validation_predictions.parquet",
+    "snapshot_inputs": "artifacts/phase3/snapshot_inputs.parquet"
+  },
+  "quarter_checkpoints": [
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 359,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2218,
+          "default_events": 215,
+          "episodes": 3205,
+          "gaps_encountered": 2,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9999,
+          "input_rows": 593879,
+          "noncures_within_horizon": 628,
+          "usable_loan_months": 593879
+        },
+        "development_observed_targets": 2846,
+        "saved_development_episodes": 3205,
+        "saved_validation_episodes": 346,
+        "validation_observed_targets": 139,
+        "validation_panel": {
+          "censored_outcomes": 212,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 217,
+          "default_events": 65,
+          "episodes": 637,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4332,
+          "input_rows": 49486,
+          "noncures_within_horizon": 208,
+          "usable_loan_months": 49486
+        }
+      },
+      "ead_validation": {
+        "mae": 163.79894788343933,
+        "mean_error": 61.85773822705024,
+        "rmse": 1101.600882360557,
+        "rows": 39590,
+        "weight_sum": 1339472.224,
+        "weighted_absolute_error_sum": 219404141.01029056,
+        "weighted_error_sum": 82856722.1945968,
+        "weighted_squared_error_sum": 1625482366274.8948
+      },
+      "expansion_weight": 33.8336,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2005q1.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2005q1.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2005q1.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2005q1.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 13,
+          "reconciled": 241
+        }
+      },
+      "rows": {
+        "cure": 3551,
+        "ead_validation": 39590,
+        "loss": 254,
+        "snapshot": 3171
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2005Q1"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 419,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2140,
+          "default_events": 224,
+          "episodes": 3265,
+          "gaps_encountered": 1,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9999,
+          "input_rows": 577436,
+          "noncures_within_horizon": 706,
+          "usable_loan_months": 577436
+        },
+        "development_observed_targets": 2846,
+        "saved_development_episodes": 3265,
+        "saved_validation_episodes": 379,
+        "validation_observed_targets": 168,
+        "validation_panel": {
+          "censored_outcomes": 217,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 283,
+          "default_events": 80,
+          "episodes": 760,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4257,
+          "input_rows": 48494,
+          "noncures_within_horizon": 260,
+          "usable_loan_months": 48494
+        }
+      },
+      "ead_validation": {
+        "mae": 156.97143067717613,
+        "mean_error": 61.795355494947145,
+        "rmse": 1045.7808722918687,
+        "rows": 38716,
+        "weight_sum": 1501673.6204000001,
+        "weighted_absolute_error_sum": 235719856.60436273,
+        "weighted_error_sum": 92796455.21000232,
+        "weighted_squared_error_sum": 1642316817002.2693
+      },
+      "expansion_weight": 38.7869,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2005q2.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2005q2.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2005q2.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2005q2.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 14,
+          "reconciled": 267
+        }
+      },
+      "rows": {
+        "cure": 3644,
+        "ead_validation": 38716,
+        "loss": 281,
+        "snapshot": 3096
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2005Q2"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 407,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2115,
+          "default_events": 283,
+          "episodes": 3317,
+          "gaps_encountered": 3,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9998,
+          "input_rows": 580567,
+          "noncures_within_horizon": 795,
+          "usable_loan_months": 580567
+        },
+        "development_observed_targets": 2910,
+        "saved_development_episodes": 3317,
+        "saved_validation_episodes": 400,
+        "validation_observed_targets": 157,
+        "validation_panel": {
+          "censored_outcomes": 246,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 286,
+          "default_events": 96,
+          "episodes": 806,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4587,
+          "input_rows": 51861,
+          "noncures_within_horizon": 274,
+          "usable_loan_months": 51861
+        }
+      },
+      "ead_validation": {
+        "mae": 179.4768085306749,
+        "mean_error": 57.63918120197139,
+        "rmse": 1888.1194654039778,
+        "rows": 41256,
+        "weight_sum": 2097219.8807999995,
+        "weighted_absolute_error_sum": 376402330.9930664,
+        "weighted_error_sum": 120882036.729808,
+        "weighted_squared_error_sum": 7476578631469.653
+      },
+      "expansion_weight": 50.8343,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2005q3.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2005q3.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2005q3.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2005q3.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 16,
+          "reconciled": 345
+        }
+      },
+      "rows": {
+        "cure": 3717,
+        "ead_validation": 41256,
+        "loss": 361,
+        "snapshot": 3269
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2005Q3"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 421,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2230,
+          "default_events": 364,
+          "episodes": 3594,
+          "gaps_encountered": 6,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9997,
+          "input_rows": 535996,
+          "noncures_within_horizon": 943,
+          "usable_loan_months": 535996
+        },
+        "development_observed_targets": 3173,
+        "saved_development_episodes": 3594,
+        "saved_validation_episodes": 413,
+        "validation_observed_targets": 181,
+        "validation_panel": {
+          "censored_outcomes": 238,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 300,
+          "default_events": 105,
+          "episodes": 875,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4323,
+          "input_rows": 48988,
+          "noncures_within_horizon": 337,
+          "usable_loan_months": 48988
+        }
+      },
+      "ead_validation": {
+        "mae": 155.3853533447544,
+        "mean_error": 32.97990402528241,
+        "rmse": 1297.4338275083014,
+        "rows": 38822,
+        "weight_sum": 1463228.3554,
+        "weighted_absolute_error_sum": 227364255.0278929,
+        "weighted_error_sum": 48257130.728163816,
+        "weighted_squared_error_sum": 2463102825815.512
+      },
+      "expansion_weight": 37.6907,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2005q4.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2005q4.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2005q4.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2005q4.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 23,
+          "reconciled": 416
+        }
+      },
+      "rows": {
+        "cure": 4007,
+        "ead_validation": 38822,
+        "loss": 439,
+        "snapshot": 3071
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2005Q4"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 492,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2217,
+          "default_events": 421,
+          "episodes": 3739,
+          "gaps_encountered": 7,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 10000,
+          "input_rows": 500060,
+          "noncures_within_horizon": 1030,
+          "usable_loan_months": 500060
+        },
+        "development_observed_targets": 3247,
+        "saved_development_episodes": 3739,
+        "saved_validation_episodes": 414,
+        "validation_observed_targets": 179,
+        "validation_panel": {
+          "censored_outcomes": 239,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 315,
+          "default_events": 148,
+          "episodes": 928,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4069,
+          "input_rows": 45859,
+          "noncures_within_horizon": 374,
+          "usable_loan_months": 45859
+        }
+      },
+      "ead_validation": {
+        "mae": 165.66513242508816,
+        "mean_error": 17.931247392343725,
+        "rmse": 1309.4782557862495,
+        "rows": 36121,
+        "weight_sum": 1078479.1453999996,
+        "weighted_absolute_error_sum": 178666390.44038683,
+        "weighted_error_sum": 19338476.363650832,
+        "weighted_squared_error_sum": 1849304106536.4646
+      },
+      "expansion_weight": 29.8574,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2006q1.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2006q1.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2006q1.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2006q1.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 40,
+          "reconciled": 487
+        }
+      },
+      "rows": {
+        "cure": 4153,
+        "ead_validation": 36121,
+        "loss": 527,
+        "snapshot": 2905
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2006Q1"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 408,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2067,
+          "default_events": 375,
+          "episodes": 3466,
+          "gaps_encountered": 4,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9999,
+          "input_rows": 456868,
+          "noncures_within_horizon": 991,
+          "usable_loan_months": 456868
+        },
+        "development_observed_targets": 3058,
+        "saved_development_episodes": 3466,
+        "saved_validation_episodes": 405,
+        "validation_observed_targets": 168,
+        "validation_panel": {
+          "censored_outcomes": 250,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 300,
+          "default_events": 112,
+          "episodes": 890,
+          "gaps_encountered": 1,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 3664,
+          "input_rows": 41437,
+          "noncures_within_horizon": 340,
+          "usable_loan_months": 41437
+        }
+      },
+      "ead_validation": {
+        "mae": 168.23475690636093,
+        "mean_error": 10.955741243754334,
+        "rmse": 1626.1149492460856,
+        "rows": 32793,
+        "weight_sum": 1010706.4944000002,
+        "weighted_absolute_error_sum": 170035961.38906428,
+        "weighted_error_sum": 11073038.82602844,
+        "weighted_squared_error_sum": 2672560474139.0137
+      },
+      "expansion_weight": 30.8208,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2006q2.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2006q2.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2006q2.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2006q2.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 36,
+          "reconciled": 426
+        }
+      },
+      "rows": {
+        "cure": 3871,
+        "ead_validation": 32793,
+        "loss": 462,
+        "snapshot": 2622
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2006Q2"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 432,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 1945,
+          "default_events": 353,
+          "episodes": 3343,
+          "gaps_encountered": 4,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9995,
+          "input_rows": 429187,
+          "noncures_within_horizon": 966,
+          "usable_loan_months": 429187
+        },
+        "development_observed_targets": 2911,
+        "saved_development_episodes": 3343,
+        "saved_validation_episodes": 384,
+        "validation_observed_targets": 141,
+        "validation_panel": {
+          "censored_outcomes": 252,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 256,
+          "default_events": 124,
+          "episodes": 884,
+          "gaps_encountered": 2,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 3568,
+          "input_rows": 40956,
+          "noncures_within_horizon": 376,
+          "usable_loan_months": 40956
+        }
+      },
+      "ead_validation": {
+        "mae": 152.8291741276163,
+        "mean_error": -0.4062767659718677,
+        "rmse": 1428.3879398376062,
+        "rows": 32589,
+        "weight_sum": 925446.1274999998,
+        "weighted_absolute_error_sum": 141435167.36542568,
+        "weighted_error_sum": -375987.25976188865,
+        "weighted_squared_error_sum": 1888180429089.8267
+      },
+      "expansion_weight": 28.3975,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2006q3.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2006q3.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2006q3.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2006q3.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 32,
+          "reconciled": 416
+        }
+      },
+      "rows": {
+        "cure": 3727,
+        "ead_validation": 32589,
+        "loss": 448,
+        "snapshot": 2647
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2006Q3"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 464,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 2086,
+          "default_events": 430,
+          "episodes": 3649,
+          "gaps_encountered": 5,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9995,
+          "input_rows": 446350,
+          "noncures_within_horizon": 1099,
+          "usable_loan_months": 446350
+        },
+        "development_observed_targets": 3185,
+        "saved_development_episodes": 3649,
+        "saved_validation_episodes": 484,
+        "validation_observed_targets": 208,
+        "validation_panel": {
+          "censored_outcomes": 290,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 361,
+          "default_events": 152,
+          "episodes": 1058,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4338,
+          "input_rows": 48759,
+          "noncures_within_horizon": 407,
+          "usable_loan_months": 48759
+        }
+      },
+      "ead_validation": {
+        "mae": 151.2470734797845,
+        "mean_error": 14.741365474853062,
+        "rmse": 934.1378719580749,
+        "rows": 38402,
+        "weight_sum": 1162762.6374000004,
+        "weighted_absolute_error_sum": 175864446.05838585,
+        "weighted_error_sum": 17140708.998417456,
+        "weighted_squared_error_sum": 1014642448905.7528
+      },
+      "expansion_weight": 30.2787,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2006q4.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2006q4.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2006q4.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2006q4.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 55,
+          "reconciled": 483
+        }
+      },
+      "rows": {
+        "cure": 4133,
+        "ead_validation": 38402,
+        "loss": 538,
+        "snapshot": 3055
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2006Q4"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 475,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 1958,
+          "default_events": 372,
+          "episodes": 3431,
+          "gaps_encountered": 1,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9998,
+          "input_rows": 431316,
+          "noncures_within_horizon": 998,
+          "usable_loan_months": 431316
+        },
+        "development_observed_targets": 2956,
+        "saved_development_episodes": 3431,
+        "saved_validation_episodes": 498,
+        "validation_observed_targets": 225,
+        "validation_panel": {
+          "censored_outcomes": 282,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 363,
+          "default_events": 153,
+          "episodes": 1055,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4645,
+          "input_rows": 52873,
+          "noncures_within_horizon": 410,
+          "usable_loan_months": 52873
+        }
+      },
+      "ead_validation": {
+        "mae": 151.41368920332354,
+        "mean_error": 15.42833819901008,
+        "rmse": 1246.995069818182,
+        "rows": 41894,
+        "weight_sum": 1266585.4913999997,
+        "weighted_absolute_error_sum": 191778381.9442784,
+        "weighted_error_sum": 19541309.319278568,
+        "weighted_squared_error_sum": 1969536264652.2876
+      },
+      "expansion_weight": 30.2331,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2007q1.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2007q1.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2007q1.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2007q1.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 40,
+          "reconciled": 448
+        }
+      },
+      "rows": {
+        "cure": 3929,
+        "ead_validation": 41894,
+        "loss": 488,
+        "snapshot": 3353
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2007Q1"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 491,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 1914,
+          "default_events": 391,
+          "episodes": 3499,
+          "gaps_encountered": 3,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9991,
+          "input_rows": 413276,
+          "noncures_within_horizon": 1094,
+          "usable_loan_months": 413276
+        },
+        "development_observed_targets": 3008,
+        "saved_development_episodes": 3499,
+        "saved_validation_episodes": 529,
+        "validation_observed_targets": 210,
+        "validation_panel": {
+          "censored_outcomes": 330,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 363,
+          "default_events": 172,
+          "episodes": 1150,
+          "gaps_encountered": 1,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4775,
+          "input_rows": 54210,
+          "noncures_within_horizon": 457,
+          "usable_loan_months": 54210
+        }
+      },
+      "ead_validation": {
+        "mae": 150.0930361634941,
+        "mean_error": 36.08369445614978,
+        "rmse": 1369.3395146467954,
+        "rows": 42855,
+        "weight_sum": 1517302.7025000006,
+        "weighted_absolute_error_sum": 227736569.39729995,
+        "weighted_error_sum": 54749887.11450035,
+        "weighted_squared_error_sum": 2845080196212.5723
+      },
+      "expansion_weight": 35.4055,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2007q2.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2007q2.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2007q2.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2007q2.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 49,
+          "reconciled": 473
+        }
+      },
+      "rows": {
+        "cure": 4028,
+        "ead_validation": 42855,
+        "loss": 522,
+        "snapshot": 3423
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2007Q2"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 551,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 1830,
+          "default_events": 421,
+          "episodes": 3502,
+          "gaps_encountered": 3,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9996,
+          "input_rows": 362231,
+          "noncures_within_horizon": 1121,
+          "usable_loan_months": 362231
+        },
+        "development_observed_targets": 2951,
+        "saved_development_episodes": 3502,
+        "saved_validation_episodes": 493,
+        "validation_observed_targets": 201,
+        "validation_panel": {
+          "censored_outcomes": 306,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 352,
+          "default_events": 153,
+          "episodes": 1107,
+          "gaps_encountered": 0,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4257,
+          "input_rows": 48568,
+          "noncures_within_horizon": 449,
+          "usable_loan_months": 48568
+        }
+      },
+      "ead_validation": {
+        "mae": 152.45218988137515,
+        "mean_error": 18.558627015376754,
+        "rmse": 1336.5857533154162,
+        "rows": 38400,
+        "weight_sum": 1094323.1999999997,
+        "weighted_absolute_error_sum": 166831968.27799404,
+        "weighted_error_sum": 20309136.103073534,
+        "weighted_squared_error_sum": 1954966239055.5498
+      },
+      "expansion_weight": 28.498,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2007q3.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2007q3.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2007q3.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2007q3.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 85,
+          "reconciled": 443
+        }
+      },
+      "rows": {
+        "cure": 3995,
+        "ead_validation": 38400,
+        "loss": 528,
+        "snapshot": 3074
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2007Q3"
+    },
+    {
+      "cure": {
+        "definition": {
+          "censor_states": [
+            "PAID_OFF",
+            "CENSORED_RPL",
+            "CENSORED_DEFECT",
+            "UNKNOWN"
+          ],
+          "default_states": [
+            "DEFAULTED"
+          ],
+          "outcome_horizon_months": 12,
+          "sustained_current_months": 3
+        },
+        "development": {
+          "censored_outcomes": 511,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 1670,
+          "default_events": 475,
+          "episodes": 3343,
+          "gaps_encountered": 5,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 9992,
+          "input_rows": 357545,
+          "noncures_within_horizon": 1162,
+          "usable_loan_months": 357545
+        },
+        "development_observed_targets": 2832,
+        "saved_development_episodes": 3343,
+        "saved_validation_episodes": 518,
+        "validation_observed_targets": 201,
+        "validation_panel": {
+          "censored_outcomes": 334,
+          "conflicting_loan_months_dropped": 0,
+          "cured_within_horizon": 368,
+          "default_events": 152,
+          "episodes": 1106,
+          "gaps_encountered": 1,
+          "identical_duplicate_rows_collapsed": 0,
+          "input_loans": 4617,
+          "input_rows": 51954,
+          "noncures_within_horizon": 404,
+          "usable_loan_months": 51954
+        }
+      },
+      "ead_validation": {
+        "mae": 170.07616205478607,
+        "mean_error": 25.192219816993457,
+        "rmse": 1839.7231231444612,
+        "rows": 40950,
+        "weight_sum": 1215502.4699999997,
+        "weighted_absolute_error_sum": 206727995.0657127,
+        "weighted_error_sum": 30621205.412338488,
+        "weighted_squared_error_sum": 4113966771846.7827
+      },
+      "expansion_weight": 29.6826,
+      "outputs": {
+        "cure": "data/processed/phase3/quarters/cure_2007q4.parquet",
+        "ead_validation": "data/processed/phase3/quarters/ead_validation_2007q4.parquet",
+        "loss": "data/processed/phase3/quarters/loss_2007q4.parquet",
+        "snapshot": "data/processed/phase3/quarters/snapshot_2007q4.parquet"
+      },
+      "release47_reconciliation": {
+        "maximum_absolute_difference": 0.0,
+        "status_counts": {
+          "actual_loss_missing": 92,
+          "reconciled": 488
+        }
+      },
+      "rows": {
+        "cure": 3861,
+        "ead_validation": 40950,
+        "loss": 580,
+        "snapshot": 3276
+      },
+      "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+      "terminal_mapping": {
+        "code15_default_rows": 0,
+        "code15_misclassified_rows": 0,
+        "code16_censor_rows": 0,
+        "code16_misclassified_rows": 0
+      },
+      "vintage": "2007Q4"
+    }
+  ],
+  "realized_lgd_definition": "Disclosed Actual Loss divided by disclosed Zero Balance Removal UPB. Raw values outside zero to one are retained for audit and excluded from the fractional logit fit.",
+  "release": 47,
+  "release47_actual_loss_sign": "Zero Balance Removal UPB plus Net Sale Proceeds plus Delinquent Accrued Interest plus Total Expenses plus MI Recoveries plus Non-MI Recoveries",
+  "run_completed_at_utc": "2026-08-15T10:36:27.061078+00:00",
+  "run_signature": "02c750e5eb8c6d9500304d3e245f0e05d28827497f71677eb90725f45f299e48",
+  "settings": {
+    "cure_consecutive_current_months": 3,
+    "cure_horizon_months": 12,
+    "development_end_month": 201112,
+    "maximum_iterations": 1000,
+    "maximum_projection_months": 360,
+    "projection_sample_loans": 250,
+    "random_seed": 42,
+    "reuse_completed_quarters": true,
+    "snapshot_month": 201212,
+    "validation_end_month": 201212,
+    "vintages": [
+      "2005Q1",
+      "2005Q2",
+      "2005Q3",
+      "2005Q4",
+      "2006Q1",
+      "2006Q2",
+      "2006Q3",
+      "2006Q4",
+      "2007Q1",
+      "2007Q2",
+      "2007Q3",
+      "2007Q4"
+    ]
+  },
+  "severity_model": {
+    "categorical_features": [
+      "vintage",
+      "orig_occupancy_status",
+      "orig_property_type",
+      "orig_loan_purpose"
+    ],
+    "condition": "resolved default disposition",
+    "development_diagnostics": {
+      "aic": 104814.64321156124,
+      "clipped_outside_unit_interval_rows": 0,
+      "condition_eligible_rows": 3864,
+      "converged": true,
+      "deviance": 23970.634532157306,
+      "effective_sample_size": 3166.7846634626358,
+      "encoded_feature_count": 26,
+      "excluded_by_condition_rows": 0,
+      "excluded_missing_target_rows": 598,
+      "excluded_outside_unit_interval_rows": 0,
+      "fitted_rows": 3266,
+      "input_rows": 3864,
+      "iterations": 5,
+      "max_iterations": 1000,
+      "null_deviance": 28703.963661505644,
+      "out_of_range_treatment": "exclude",
+      "outside_unit_interval_rows": 0,
+      "pseudo_r_squared": 0.1649015858982611,
+      "warnings": [],
+      "weight_sum": 108094.9914,
+      "weighted_mae": 0.1786730731049959,
+      "weighted_mean_observed": 0.48121617182010595,
+      "weighted_mean_predicted": 0.4812161718201058,
+      "weighted_rmse": 0.21760801653852535,
+      "zero_weight_rows": 0
+    },
+    "numeric_features": [
+      "loan_age",
+      "estimated_ltv",
+      "orig_classic_fico",
+      "orig_original_ltv",
+      "orig_original_dti",
+      "orig_original_interest_rate",
+      "orig_original_upb"
+    ],
+    "out_of_time_validation": {
+      "mae": 0.18435948097619592,
+      "mean_error": 0.04512497325218669,
+      "rmse": 0.23026058453378112,
+      "rows": 1357,
+      "weight_sum": 44918.3379,
+      "weighted_observed_mean": 0.5147075362157919,
+      "weighted_predicted_mean": 0.5598325094679785
+    }
+  },
+  "source_manifest": [
+    {
+      "expansion_weight": 33.8336,
+      "panel": "data/processed/phase1/panel_2005q1.parquet",
+      "panel_bytes": 10139580,
+      "panel_rows": 801826,
+      "population_originations": 338336,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2005Q1"
+    },
+    {
+      "expansion_weight": 38.7869,
+      "panel": "data/processed/phase1/panel_2005q2.parquet",
+      "panel_bytes": 9857389,
+      "panel_rows": 780096,
+      "population_originations": 387869,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2005Q2"
+    },
+    {
+      "expansion_weight": 50.8343,
+      "panel": "data/processed/phase1/panel_2005q3.parquet",
+      "panel_bytes": 10037554,
+      "panel_rows": 793813,
+      "population_originations": 508343,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2005Q3"
+    },
+    {
+      "expansion_weight": 37.6907,
+      "panel": "data/processed/phase1/panel_2005q4.parquet",
+      "panel_bytes": 9355094,
+      "panel_rows": 741627,
+      "population_originations": 376907,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2005Q4"
+    },
+    {
+      "expansion_weight": 29.8574,
+      "panel": "data/processed/phase1/panel_2006q1.parquet",
+      "panel_bytes": 8708199,
+      "panel_rows": 691606,
+      "population_originations": 298574,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2006Q1"
+    },
+    {
+      "expansion_weight": 30.8208,
+      "panel": "data/processed/phase1/panel_2006q2.parquet",
+      "panel_bytes": 7827882,
+      "panel_rows": 623395,
+      "population_originations": 308208,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2006Q2"
+    },
+    {
+      "expansion_weight": 28.3975,
+      "panel": "data/processed/phase1/panel_2006q3.parquet",
+      "panel_bytes": 7477387,
+      "panel_rows": 597942,
+      "population_originations": 283975,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2006Q3"
+    },
+    {
+      "expansion_weight": 30.2787,
+      "panel": "data/processed/phase1/panel_2006q4.parquet",
+      "panel_bytes": 8098105,
+      "panel_rows": 642524,
+      "population_originations": 302787,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2006Q4"
+    },
+    {
+      "expansion_weight": 30.2331,
+      "panel": "data/processed/phase1/panel_2007q1.parquet",
+      "panel_bytes": 8141546,
+      "panel_rows": 644170,
+      "population_originations": 302331,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2007Q1"
+    },
+    {
+      "expansion_weight": 35.4055,
+      "panel": "data/processed/phase1/panel_2007q2.parquet",
+      "panel_bytes": 7892676,
+      "panel_rows": 628830,
+      "population_originations": 354055,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2007Q2"
+    },
+    {
+      "expansion_weight": 28.498,
+      "panel": "data/processed/phase1/panel_2007q3.parquet",
+      "panel_bytes": 6928895,
+      "panel_rows": 555940,
+      "population_originations": 284980,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2007Q3"
+    },
+    {
+      "expansion_weight": 29.6826,
+      "panel": "data/processed/phase1/panel_2007q4.parquet",
+      "panel_bytes": 7092012,
+      "panel_rows": 566439,
+      "population_originations": 296826,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "vintage": "2007Q4"
+    }
+  ],
+  "terminal_code_policy": {
+    "code15": "default disposition",
+    "code16": "censored RPL exit",
+    "default_codes": [
+      "02",
+      "03",
+      "09",
+      "15"
+    ]
+  }
+}

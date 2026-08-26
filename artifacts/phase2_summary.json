@@ -1,0 +1,958 @@
+{
+  "case_control_sampling": {
+    "events_and_delinquent_non_events_retained": true,
+    "inverse_probability_weighted": true,
+    "modulus": 6,
+    "sampled_current_non_events": 877244,
+    "scope": "development CURRENT non-event rows only"
+  },
+  "cutoff_contract": {
+    "development_target_month_end": 201112,
+    "feature_timing": "all predictors are observed at month t",
+    "target_timing": "default state is observed at adjacent month t plus one",
+    "validation_target_month_end": 201212,
+    "validation_target_month_start": 201113
+  },
+  "development": {
+    "events": 4355,
+    "rows": 1157886,
+    "weight_sum": 190749264.0821001,
+    "weighted_events": 143385.31300000002
+  },
+  "lifetime_pd_reference": {
+    "contractual_term_cap_applied": true,
+    "curve_horizon_months": 360,
+    "method": "same snapshot age and remaining term, with risk covariates reset to the first observed origination baseline"
+  },
+  "model_fit": {
+    "converged": true,
+    "events": 4355,
+    "max_iter": 1000,
+    "n_iter": [
+      63
+    ],
+    "non_events": 1153531,
+    "observations": 1157886,
+    "sample_weight_provided": true,
+    "solver": "lbfgs",
+    "transformed_features": 32,
+    "weight_sum": 190749264.0821001,
+    "weighted_events": 143385.31300000002,
+    "weighted_non_events": 190605878.76910004
+  },
+  "outputs": {
+    "counts": "artifacts/tables/phase2_pooled_weighted_transition_counts.csv",
+    "current_pd_curves": "artifacts/phase2/current_pd_curves.parquet",
+    "development_hazard_sample": "data/processed/phase2/development_hazard_sample.parquet",
+    "diagnostics": "artifacts/tables/phase2_pooled_weighted_transition_diagnostics.json",
+    "figure": "reports/figures/phase2_pooled_weighted_transition_matrix.png",
+    "hazard_coefficients": "artifacts/tables/phase2_hazard_coefficients.csv",
+    "hazard_model": "artifacts/phase2/monthly_default_hazard.pkl",
+    "lifetime_pd_figure": "reports/figures/phase2_lifetime_pd_profile.png",
+    "lifetime_pd_profile": "artifacts/tables/phase2_lifetime_pd_profile.csv",
+    "origination_pd_curves": "artifacts/phase2/origination_pd_curves.parquet",
+    "pooled_roll_rates": "artifacts/tables/phase2_pooled_roll_rates.csv",
+    "probabilities": "artifacts/tables/phase2_pooled_weighted_transition_probabilities.csv",
+    "segmented_roll_rates": "artifacts/tables/phase2_segmented_roll_rates.csv",
+    "snapshot_loans": "artifacts/phase2/snapshot_loans.parquet",
+    "validation_calibration": "artifacts/tables/phase2_validation_calibration.csv",
+    "validation_calibration_figure": "reports/figures/phase2_validation_calibration.png",
+    "validation_hazard_rows": "data/processed/phase2/validation_hazard_rows.parquet",
+    "validation_predictions": "data/processed/phase2/validation_predictions.parquet"
+  },
+  "pipeline_version": 1,
+  "quarter_checkpoints": [
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 33.8336,
+          "panel_mtime_ns": 1786787125602952428,
+          "panel_path": "data/processed/phase1/panel_2005q1.parquet",
+          "panel_rows": 801826,
+          "panel_size": 10139580,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2005q1.json",
+          "vintage": "2005Q1"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "54685135e4fb9151f45dd7359a4e7345fcc3aa433b840096875d9915880b12a7",
+      "development_rows": 111843,
+      "hazard_events": 281,
+      "hazard_rows": 156688,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2005q1_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2005q1_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2005q1_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 298,
+      "snapshot_rows": 3171,
+      "transition_diagnostics": {
+        "adjacent_pairs": 791823,
+        "candidate_pairs": 791826,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 3,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 801826,
+        "largest_gap_months": 6,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 3,
+        "unique_loan_months": 801826,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 801826
+      },
+      "validation_rows": 44845,
+      "vintage": "2005Q1"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 38.7869,
+          "panel_mtime_ns": 1786787248334143793,
+          "panel_path": "data/processed/phase1/panel_2005q2.parquet",
+          "panel_rows": 780096,
+          "panel_size": 9857389,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2005q2.json",
+          "vintage": "2005Q2"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "f662dadcf79384066cec8180f839b900b0ae38f258f8030d4fa92a4f8ba30737",
+      "development_rows": 110046,
+      "hazard_events": 306,
+      "hazard_rows": 153959,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2005q2_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2005q2_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2005q2_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 307,
+      "snapshot_rows": 3096,
+      "transition_diagnostics": {
+        "adjacent_pairs": 770093,
+        "candidate_pairs": 770096,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 3,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 780096,
+        "largest_gap_months": 7,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 3,
+        "unique_loan_months": 780096,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 780096
+      },
+      "validation_rows": 43913,
+      "vintage": "2005Q2"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 50.8343,
+          "panel_mtime_ns": 1786787398474126540,
+          "panel_path": "data/processed/phase1/panel_2005q3.parquet",
+          "panel_rows": 793813,
+          "panel_size": 10037554,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2005q3.json",
+          "vintage": "2005Q3"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "d83a7356daa7fedc8a0f876657860f4b48e08993acee349bcc1afd61b00fd4ff",
+      "development_rows": 111054,
+      "hazard_events": 380,
+      "hazard_rows": 158008,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2005q3_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2005q3_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2005q3_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 308,
+      "snapshot_rows": 3269,
+      "transition_diagnostics": {
+        "adjacent_pairs": 783807,
+        "candidate_pairs": 783813,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 6,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 793813,
+        "largest_gap_months": 26,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 6,
+        "unique_loan_months": 793813,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 793813
+      },
+      "validation_rows": 46954,
+      "vintage": "2005Q3"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 37.6907,
+          "panel_mtime_ns": 1786787511449837139,
+          "panel_path": "data/processed/phase1/panel_2005q4.parquet",
+          "panel_rows": 741627,
+          "panel_size": 9355094,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2005q4.json",
+          "vintage": "2005Q4"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "b6bb60ebbf046099fab0f3849ae258525759ade250f871f19e47b217a06c580b",
+      "development_rows": 107147,
+      "hazard_events": 470,
+      "hazard_rows": 151363,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2005q4_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2005q4_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2005q4_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 301,
+      "snapshot_rows": 3071,
+      "transition_diagnostics": {
+        "adjacent_pairs": 731619,
+        "candidate_pairs": 731627,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 8,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 741627,
+        "largest_gap_months": 13,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 8,
+        "unique_loan_months": 741627,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 741627
+      },
+      "validation_rows": 44216,
+      "vintage": "2005Q4"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 29.8574,
+          "panel_mtime_ns": 1786787605580597794,
+          "panel_path": "data/processed/phase1/panel_2006q1.parquet",
+          "panel_rows": 691606,
+          "panel_size": 8708199,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2006q1.json",
+          "vintage": "2006Q1"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "10143c09a4c5a7758a7911ba4b308cd22935d780772d75d1c68a42f09124e748",
+      "development_rows": 102419,
+      "hazard_events": 572,
+      "hazard_rows": 143639,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2006q1_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2006q1_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2006q1_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 306,
+      "snapshot_rows": 2905,
+      "transition_diagnostics": {
+        "adjacent_pairs": 681596,
+        "candidate_pairs": 681606,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 10,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 691606,
+        "largest_gap_months": 21,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 10,
+        "unique_loan_months": 691606,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 691606
+      },
+      "validation_rows": 41220,
+      "vintage": "2006Q1"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 30.8208,
+          "panel_mtime_ns": 1786787685263159883,
+          "panel_path": "data/processed/phase1/panel_2006q2.parquet",
+          "panel_rows": 623395,
+          "panel_size": 7827882,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2006q2.json",
+          "vintage": "2006Q2"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "5d57ee85d8287fcf66e756a1f696d8960515fbb613815a69dbc73c233af1ced8",
+      "development_rows": 94560,
+      "hazard_events": 491,
+      "hazard_rows": 131940,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2006q2_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2006q2_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2006q2_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 307,
+      "snapshot_rows": 2622,
+      "transition_diagnostics": {
+        "adjacent_pairs": 613388,
+        "candidate_pairs": 613395,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 7,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 623395,
+        "largest_gap_months": 16,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 7,
+        "unique_loan_months": 623395,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 623395
+      },
+      "validation_rows": 37380,
+      "vintage": "2006Q2"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 28.3975,
+          "panel_mtime_ns": 1786787759123942122,
+          "panel_path": "data/processed/phase1/panel_2006q3.parquet",
+          "panel_rows": 597942,
+          "panel_size": 7477387,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2006q3.json",
+          "vintage": "2006Q3"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "046d92476842e11867cd561e6da80b77228addc9b20a208c8a0d658e1541057c",
+      "development_rows": 89138,
+      "hazard_events": 486,
+      "hazard_rows": 126169,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2006q3_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2006q3_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2006q3_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 301,
+      "snapshot_rows": 2647,
+      "transition_diagnostics": {
+        "adjacent_pairs": 587935,
+        "candidate_pairs": 587942,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 7,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 597942,
+        "largest_gap_months": 12,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 7,
+        "unique_loan_months": 597942,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 597942
+      },
+      "validation_rows": 37031,
+      "vintage": "2006Q3"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 30.2787,
+          "panel_mtime_ns": 1786787841157208868,
+          "panel_path": "data/processed/phase1/panel_2006q4.parquet",
+          "panel_rows": 642524,
+          "panel_size": 8098105,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2006q4.json",
+          "vintage": "2006Q4"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "66115ca9b7091cf83a91ba5e3cf96f8d7596d1f40bc22624d5087bebfce5fb51",
+      "development_rows": 93922,
+      "hazard_events": 587,
+      "hazard_rows": 137787,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2006q4_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2006q4_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2006q4_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 324,
+      "snapshot_rows": 3055,
+      "transition_diagnostics": {
+        "adjacent_pairs": 632517,
+        "candidate_pairs": 632524,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 7,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 642524,
+        "largest_gap_months": 8,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 7,
+        "unique_loan_months": 642524,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 642524
+      },
+      "validation_rows": 43865,
+      "vintage": "2006Q4"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 30.2331,
+          "panel_mtime_ns": 1786787923508286380,
+          "panel_path": "data/processed/phase1/panel_2007q1.parquet",
+          "panel_rows": 644170,
+          "panel_size": 8141546,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2007q1.json",
+          "vintage": "2007Q1"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "880d45c97ef92382f1befa929b27e9f8a455379d7e353fdc7bdd133091938c75",
+      "development_rows": 89716,
+      "hazard_events": 531,
+      "hazard_rows": 137430,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2007q1_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2007q1_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2007q1_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 322,
+      "snapshot_rows": 3353,
+      "transition_diagnostics": {
+        "adjacent_pairs": 634168,
+        "candidate_pairs": 634170,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 2,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 644170,
+        "largest_gap_months": 7,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 2,
+        "unique_loan_months": 644170,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 644170
+      },
+      "validation_rows": 47714,
+      "vintage": "2007Q1"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 35.4055,
+          "panel_mtime_ns": 1786788012156033796,
+          "panel_path": "data/processed/phase1/panel_2007q2.parquet",
+          "panel_rows": 628830,
+          "panel_size": 7892676,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2007q2.json",
+          "vintage": "2007Q2"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "43c52fed5dc05ed20b38c499a76169c0a1744bb9178862cc68b0bba05730c4ee",
+      "development_rows": 88917,
+      "hazard_events": 565,
+      "hazard_rows": 137714,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2007q2_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2007q2_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2007q2_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 329,
+      "snapshot_rows": 3423,
+      "transition_diagnostics": {
+        "adjacent_pairs": 618822,
+        "candidate_pairs": 618830,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 8,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 628830,
+        "largest_gap_months": 7,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 8,
+        "unique_loan_months": 628830,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 628830
+      },
+      "validation_rows": 48797,
+      "vintage": "2007Q2"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 28.498,
+          "panel_mtime_ns": 1786788080124263053,
+          "panel_path": "data/processed/phase1/panel_2007q3.parquet",
+          "panel_rows": 555940,
+          "panel_size": 6928895,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2007q3.json",
+          "vintage": "2007Q3"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "636e27ca818f30c9dd52c736d7b26cd1e8d48bcb6ad53167d5b729bfa973fd6a",
+      "development_rows": 80112,
+      "hazard_events": 577,
+      "hazard_rows": 123841,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2007q3_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2007q3_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2007q3_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 328,
+      "snapshot_rows": 3074,
+      "transition_diagnostics": {
+        "adjacent_pairs": 545933,
+        "candidate_pairs": 545940,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 7,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 555940,
+        "largest_gap_months": 112,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 7,
+        "unique_loan_months": 555940,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 555940
+      },
+      "validation_rows": 43729,
+      "vintage": "2007Q3"
+    },
+    {
+      "contract": {
+        "categorical_features": [
+          "current_state",
+          "vintage",
+          "occupancy_status",
+          "loan_purpose",
+          "modification_flag"
+        ],
+        "current_non_event_modulus": 6,
+        "development_end_month": 201112,
+        "numeric_features": [
+          "loan_age_months",
+          "current_interest_rate",
+          "estimated_ltv",
+          "orig_fico",
+          "orig_ltv",
+          "orig_dti",
+          "orig_interest_rate"
+        ],
+        "pipeline_version": 1,
+        "sample_seed": 20260815,
+        "snapshot_month": 201212,
+        "source": {
+          "expansion_weight": 29.6826,
+          "panel_mtime_ns": 1786788155312220568,
+          "panel_path": "data/processed/phase1/panel_2007q4.parquet",
+          "panel_rows": 566439,
+          "panel_size": 7092012,
+          "release": 47,
+          "sample_seed": 20260815,
+          "sampled_loans": 10000,
+          "summary_path": "artifacts/phase1/quarters/2007q4.json",
+          "vintage": "2007Q4"
+        },
+        "validation_end_month": 201212
+      },
+      "contract_hash": "cc40ccf3eb433800684bd1f8ea705bb11aa1959caf5c846ea1af6c8170c117b6",
+      "development_rows": 79012,
+      "hazard_events": 629,
+      "hazard_rows": 125683,
+      "outputs": {
+        "hazard_rows": "data/processed/phase2/quarters/2007q4_hazard_rows.parquet",
+        "roll_rows": "data/processed/phase2/quarters/2007q4_roll_rows.parquet",
+        "snapshot_rows": "data/processed/phase2/quarters/2007q4_snapshot_rows.parquet"
+      },
+      "pipeline_version": 1,
+      "roll_rows": 322,
+      "snapshot_rows": 3276,
+      "transition_diagnostics": {
+        "adjacent_pairs": 556430,
+        "candidate_pairs": 556439,
+        "conflicting_duplicate_loan_months": 0,
+        "conflicting_rows_dropped": 0,
+        "duplicate_loan_months": 0,
+        "duplicate_rows": 0,
+        "gap_pairs_skipped": 9,
+        "identical_duplicate_loan_months": 0,
+        "identical_duplicate_rows_collapsed": 0,
+        "input_loans": 10000,
+        "input_rows": 566439,
+        "largest_gap_months": 36,
+        "loans_with_duplicates": 0,
+        "loans_with_gaps": 9,
+        "unique_loan_months": 566439,
+        "unknown_state_rows": 0,
+        "usable_loan_months": 566439
+      },
+      "validation_rows": 46671,
+      "vintage": "2007Q4"
+    }
+  ],
+  "run_completed_at_utc": "2026-08-15T10:36:00.531342+00:00",
+  "run_signature": "3d8295638a5c68a4692dfa719ec203168f4814238f279feda847aaa7bc4ff9aa",
+  "settings": {
+    "current_non_event_modulus": 6,
+    "development_end_month": 201112,
+    "maximum_iterations": 1000,
+    "projection_months": 360,
+    "sample_seed": 20260815,
+    "snapshot_month": 201212,
+    "validation_end_month": 201212,
+    "vintages": [
+      "2005Q1",
+      "2005Q2",
+      "2005Q3",
+      "2005Q4",
+      "2006Q1",
+      "2006Q2",
+      "2006Q3",
+      "2006Q4",
+      "2007Q1",
+      "2007Q2",
+      "2007Q3",
+      "2007Q4"
+    ]
+  },
+  "snapshot_loans": 36962,
+  "validation": {
+    "events": 1520,
+    "observations": 526335,
+    "target_month_end": 201212,
+    "target_month_start": 201201,
+    "weight_sum": 17838219.158600006,
+    "weighted_average_precision": 0.04764787889732081,
+    "weighted_brier_score": 0.0026938823565564683,
+    "weighted_event_rate": 0.0028018601551884257,
+    "weighted_events": 49980.19550000016,
+    "weighted_log_loss": 0.012144851324285695,
+    "weighted_mean_prediction": 0.0023340987585255472,
+    "weighted_roc_auc": 0.966847439250179
+  }
+}

@@ -1,0 +1,82 @@
+project:
+  name: ifrs9-ecl-engine
+  random_seed: 42
+
+paths:
+  processed_data: data/processed
+  artifacts: artifacts
+  figures: reports/figures
+
+data:
+  source_root: null
+  source_root_environment: FREDDIE_DATA_ROOT
+
+phase0:
+  vintage: 2005Q1
+  maximum_loans: 5000
+  parquet_batch_rows: 50000
+  require_consecutive_months: true
+
+phase1:
+  vintages:
+    - 2005Q1
+    - 2005Q2
+    - 2005Q3
+    - 2005Q4
+    - 2006Q1
+    - 2006Q2
+    - 2006Q3
+    - 2006Q4
+    - 2007Q1
+    - 2007Q2
+    - 2007Q3
+    - 2007Q4
+  loans_per_vintage: 10000
+  sample_seed: 20260815
+  parquet_batch_rows: 50000
+  reuse_completed_quarters: true
+
+modeling:
+  development_end_month: 201112
+  validation_end_month: 201212
+  backtest_snapshot_month: 201212
+  performance_cutoff_month: 202603
+  current_non_event_month_modulus: 6
+  maximum_iterations: 1000
+
+phase3:
+  cure_consecutive_current_months: 3
+  cure_horizon_months: 12
+  ead_projection_sample_loans: 250
+  reuse_completed_quarters: true
+
+ifrs9:
+  sicr_relative_lifetime_pd_ratio: 2.0
+  sicr_absolute_lifetime_pd_increase: 0.05
+  stage2_dpd_backstop: 30
+  stage3_dpd_threshold: 90
+  maximum_projection_months: 360
+
+scenarios:
+  - name: upside
+    weight: 0.20
+    hazard_multiplier: 0.75
+  - name: base
+    weight: 0.60
+    hazard_multiplier: 1.00
+  - name: downside
+    weight: 0.20
+    hazard_multiplier: 1.60
+
+phase4:
+  reuse_completed: true
+  default_effective_annual_rate: 0.0
+
+phase5:
+  reuse_completed: true
+  align_to_ecl_horizon: true
+  scan_batch_rows: 100000
+  segment_columns:
+    - stage
+  provision_col: probability_weighted_ecl
+  apply_exposure_weights: true

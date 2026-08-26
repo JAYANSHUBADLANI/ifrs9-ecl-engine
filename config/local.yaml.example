@@ -1,0 +1,5 @@
+# Copy this file to config/local.yaml and set the parent directory that contains
+# historical_data_2005, historical_data_2006, and historical_data_2007.
+data:
+  source_root: /path/to/freddie/mac/data
+

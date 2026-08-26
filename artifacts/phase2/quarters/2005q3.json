@@ -1,0 +1,71 @@
+{
+  "contract": {
+    "categorical_features": [
+      "current_state",
+      "vintage",
+      "occupancy_status",
+      "loan_purpose",
+      "modification_flag"
+    ],
+    "current_non_event_modulus": 6,
+    "development_end_month": 201112,
+    "numeric_features": [
+      "loan_age_months",
+      "current_interest_rate",
+      "estimated_ltv",
+      "orig_fico",
+      "orig_ltv",
+      "orig_dti",
+      "orig_interest_rate"
+    ],
+    "pipeline_version": 1,
+    "sample_seed": 20260815,
+    "snapshot_month": 201212,
+    "source": {
+      "expansion_weight": 50.8343,
+      "panel_mtime_ns": 1786787398474126540,
+      "panel_path": "data/processed/phase1/panel_2005q3.parquet",
+      "panel_rows": 793813,
+      "panel_size": 10037554,
+      "release": 47,
+      "sample_seed": 20260815,
+      "sampled_loans": 10000,
+      "summary_path": "artifacts/phase1/quarters/2005q3.json",
+      "vintage": "2005Q3"
+    },
+    "validation_end_month": 201212
+  },
+  "contract_hash": "d83a7356daa7fedc8a0f876657860f4b48e08993acee349bcc1afd61b00fd4ff",
+  "development_rows": 111054,
+  "hazard_events": 380,
+  "hazard_rows": 158008,
+  "outputs": {
+    "hazard_rows": "data/processed/phase2/quarters/2005q3_hazard_rows.parquet",
+    "roll_rows": "data/processed/phase2/quarters/2005q3_roll_rows.parquet",
+    "snapshot_rows": "data/processed/phase2/quarters/2005q3_snapshot_rows.parquet"
+  },
+  "pipeline_version": 1,
+  "roll_rows": 308,
+  "snapshot_rows": 3269,
+  "transition_diagnostics": {
+    "adjacent_pairs": 783807,
+    "candidate_pairs": 783813,
+    "conflicting_duplicate_loan_months": 0,
+    "conflicting_rows_dropped": 0,
+    "duplicate_loan_months": 0,
+    "duplicate_rows": 0,
+    "gap_pairs_skipped": 6,
+    "identical_duplicate_loan_months": 0,
+    "identical_duplicate_rows_collapsed": 0,
+    "input_loans": 10000,
+    "input_rows": 793813,
+    "largest_gap_months": 26,
+    "loans_with_duplicates": 0,
+    "loans_with_gaps": 6,
+    "unique_loan_months": 793813,
+    "unknown_state_rows": 0,
+    "usable_loan_months": 793813
+  },
+  "validation_rows": 46954,
+  "vintage": "2005Q3"
+}

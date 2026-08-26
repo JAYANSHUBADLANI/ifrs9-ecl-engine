@@ -1,0 +1,61 @@
+{
+  "archive": "historical_data_2006/historical_data_2006Q1.zip",
+  "expansion_weight": 29.8574,
+  "outputs": {
+    "origination": "data/processed/phase1/origination_2006q1.parquet",
+    "panel": "data/processed/phase1/panel_2006q1.parquet"
+  },
+  "panel": {
+    "actual_loss_outside_tolerance_rows": 0,
+    "actual_loss_reconciled_rows": 766,
+    "actual_loss_rows": 766,
+    "before_first_payment_rows": 8260,
+    "earliest_reporting_month": "200512",
+    "latest_reporting_month": "202603",
+    "loan_count": 10000,
+    "maximum_actual_loss_difference": "0",
+    "may_2019_or_later_rows": 34693,
+    "pre_may_2019_rows": 656913,
+    "rows_written": 691606,
+    "state_counts": {
+      "30_DPD": 17421,
+      "60_DPD": 5953,
+      "90_PLUS": 24292,
+      "CENSORED_DEFECT": 43,
+      "CENSORED_RPL": 187,
+      "CURRENT": 630779,
+      "DEFAULTED": 4209,
+      "PAID_OFF": 8722
+    },
+    "vintage": "2006Q1",
+    "zero_balance_code_counts": {
+      "01": 8722,
+      "02": 120,
+      "03": 214,
+      "09": 458,
+      "15": 27,
+      "16": 187,
+      "96": 43
+    }
+  },
+  "performance_scan": {
+    "completed_archive_scan": true,
+    "early_stop_occurred": false,
+    "loan_order_check_enabled": true,
+    "loan_order_valid": true,
+    "ordering_checks": 20622023,
+    "physical_rows_scanned": 20622024,
+    "requested_loans": 10000,
+    "selected_loans_found": 10000,
+    "selected_rows_yielded": 691606,
+    "selection_complete": true
+  },
+  "population_originations": 298574,
+  "release": 47,
+  "requested_loans": 10000,
+  "sample_method": "smallest stable 64-bit loan ID hashes",
+  "sample_seed": 20260815,
+  "sampled_loans": 10000,
+  "sampling_fraction": 0.033492534514056815,
+  "vintage": "2006Q1"
+}

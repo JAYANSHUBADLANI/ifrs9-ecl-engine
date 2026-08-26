@@ -1,0 +1,26 @@
+{
+  "archive": "historical_data_2005/historical_data_2005Q1.zip",
+  "archive_bytes": 379039966,
+  "members": [
+    {
+      "compressed_bytes": 6956813,
+      "crc32": "3c0ac532",
+      "encrypted": false,
+      "name": "orig_2005Q1.txt",
+      "uncompressed_bytes": 43513368
+    },
+    {
+      "compressed_bytes": 372082815,
+      "crc32": "224b9e51",
+      "encrypted": false,
+      "name": "perf_2005Q1.txt",
+      "uncompressed_bytes": 3011849336
+    }
+  ],
+  "origination_expected_fields": 31,
+  "origination_member": "orig_2005Q1.txt",
+  "performance_expected_fields": 35,
+  "performance_member": "perf_2005Q1.txt",
+  "release": 47,
+  "vintage": "2005Q1"
+}
