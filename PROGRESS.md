@@ -1,6 +1,6 @@
 # Project progress
 
-Last updated: 2026-08-20
+Last updated: 2026-09-07
 
 ## Completed
 
@@ -45,9 +45,32 @@ Last updated: 2026-08-20
 
 ## Final verification
 
-- All 244 automated tests pass under Python 3.12.
+- All 251 automated tests pass under Python 3.12.
 - Source and tests compile successfully.
 - Pyflakes reports no unused imports or undefined names.
 - The changed Phase 5 files pass Black formatting checks.
 - Stage, scenario, provision, and realized-loss aggregate tables reconcile to their summaries.
 - The final Phase 4 and Phase 5 figures were visually inspected.
+
+## 2026-09-07: per-loan PD explainability
+
+Staging already records an auditable trigger and the scorecard project's adverse action reasons
+were the model for the reference-relative framing here, but nothing previously answered why one
+loan's own monthly hazard is what it is in terms of its own features. Added `pd_explain.py`:
+an exact, closed-form Shapley decomposition of the fitted logistic hazard model's log odds,
+computed directly from the pipeline's coefficients rather than through the `shap` package's
+sampling-based `LinearExplainer`, since a linear model's exact decomposition needs no sampling.
+
+- Reference point: the training mean for standardized numeric features (exactly zero in
+  transformed space by construction, no background data needed for that part), and a supplied
+  background frame's category prevalence for one-hot categorical features, matching
+  `reasons.py`'s population-mean basis rather than an arbitrary all-zero baseline.
+- Verified against the real fitted artifact (`artifacts/phase2/monthly_default_hazard.pkl`) and
+  real development/validation rows, not only synthetic fixtures: additivity holds exactly and
+  the decomposed hazard matches `predict_hazard` bit for bit.
+- 7 new tests, all passing: additivity, exact match to `predict_hazard`, one contribution per
+  fitted feature, near-zero numeric contribution at the reference mean, descending rank order,
+  rejection of an empty background, and a round-trippable `as_dict` payload.
+- Did not add this to the scorecard or churn projects: the scorecard already has a more
+  regulation-appropriate reason-code mechanism for its points-based card, and the churn project
+  already has a complete SHAP notebook. Checked both before assuming a gap existed.

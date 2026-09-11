@@ -121,6 +121,13 @@ Monthly hazards are converted into survival, marginal PD, and cumulative PD curv
 advance loan age and stop at remaining legal maturity. Current and origination-reference
 curves use the same snapshot age and horizon so the SICR ratio is like for like.
 
+`pd_explain.py` decomposes one loan's monthly hazard into a per-feature contribution to its
+log odds, exact rather than sampled since the hazard model is logistic: each contribution is
+that feature's coefficient times its deviation from a reference value, and the contributions
+plus the reference sum to exactly the loan's own log odds. This is the question staging's own
+auditable trigger does not answer: not just which rule moved a loan's stage, but why the
+underlying PD is what it is.
+
 ![PD validation calibration](reports/figures/phase2_validation_calibration.png)
 
 ## LGD and EAD
